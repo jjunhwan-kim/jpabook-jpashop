@@ -48,6 +48,6 @@ public class MemberController {
         // API로 반환할 때는 엔티티를 반환하면 안됨
         // 일반적으로 MemberForm 이나 DTO를 넘겨서 화면에 출력하는 것을 권장함
         model.addAttribute("members", members);
-        return "/members/memberList";
+        return "members/memberList";
     }
 }

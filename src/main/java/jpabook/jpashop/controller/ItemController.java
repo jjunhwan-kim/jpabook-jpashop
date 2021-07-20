@@ -47,7 +47,7 @@ public class ItemController {
         return "items/itemList";
     }
 
-    @GetMapping("items/{itemId}/edit") // path variable
+    @GetMapping("/items/{itemId}/edit") // path variable
     public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
         Book item = (Book) itemService.findOne(itemId);
 
@@ -63,7 +63,7 @@ public class ItemController {
         return "items/updateItemForm";
     }
 
-    @PostMapping("items/{itemId}/edit") // path variable
+    @PostMapping("/items/{itemId}/edit") // path variable
     public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") BookForm form) {
 
 //        Book book = new Book();
