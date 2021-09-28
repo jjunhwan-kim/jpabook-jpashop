@@ -2,19 +2,18 @@ package jpabook.jpashop.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jpabook.jpashop.domain.item.Item;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
 
 import static javax.persistence.FetchType.*;
+import static lombok.AccessLevel.*;
 
-@Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = PROTECTED)
+@Entity
 public class OrderItem {
 
     @Id @GeneratedValue
@@ -33,7 +32,13 @@ public class OrderItem {
     private int orderPrice;
     private int count;
 
-    // 생성 메소드
+    /**
+     * 주문 아이템 생성
+     * @param item
+     * @param orderPrice
+     * @param count
+     * @return orderItem
+     */
     public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
         OrderItem orderItem = new OrderItem();
         orderItem.setItem(item);
@@ -44,12 +49,13 @@ public class OrderItem {
         return orderItem;
     }
 
-    // 비즈니스 로직
+    /**
+     * 주문 취소
+     */
     public void cancel() {
         getItem().addStock(count);
     }
 
-    // 조회 로직
     /**
      * 주문 상품 전체 가격 조회
      * @return totalPrice

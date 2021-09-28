@@ -12,18 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
+@Service
 public class OrderService {
 
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
 
-    // 주문
     /**
-     * 주문
+     * 주문 생성
      */
     @Transactional
     public Long order(Long memberId, Long itemId, int count) {
@@ -43,14 +42,11 @@ public class OrderService {
         Order order = Order.createOrder(member, delivery, orderItem);
 
         // 주문 저장
-        // Cascade 설정으로 delivery, orderItem 도 데이터베이스에 자동으로 저장됨
         orderRepository.save(order);
 
         return order.getId();
     }
 
-
-    // 취소
     /**
      * 주문 취소
      */
@@ -62,7 +58,11 @@ public class OrderService {
         order.cancel();
     }
 
-    // 검색
+    /**
+     * 주문 검색
+     * @param orderSearch
+     * @return
+     */
     public List<Order> findOrders(OrderSearch orderSearch) {
         return orderRepository.findAll(orderSearch);
     }

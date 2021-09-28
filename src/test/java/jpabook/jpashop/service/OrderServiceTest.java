@@ -26,7 +26,7 @@ class OrderServiceTest {
     @Autowired OrderRepository orderRepository;
 
     @Test
-    public void orderItem() throws Exception {
+    void orderItem() {
         // given
         Member member = createMember();
 
@@ -51,21 +51,20 @@ class OrderServiceTest {
     }
 
     @Test
-    public void orderOutOfStockItem() throws Exception {
+    void orderOutOfStockItem() {
         // given
         Member member = createMember();
         Book book = createBook("시골 JPA", 10000, 10);
         int orderCount = 11;
 
-        // when
+        // when, then
         assertThrows(NotEnoughStockException.class, () -> {
             Long orderId = orderService.order(member.getId(), book.getId(), orderCount);
         });
-        // then
     }
 
     @Test
-    public void cancelOrder() throws Exception {
+    void cancelOrder() {
         // given
         Member member = createMember();
         Book book = createBook("시골 JPA", 10000, 10);
@@ -82,7 +81,8 @@ class OrderServiceTest {
         // 주문이 취소된 상품은 그만큼 재고가 증가해야 한다.
         assertThat(book.getStockQuantity()).isEqualTo(10);
     }
-    private Book createBook(String name, int price, int stockQuantity) {
+
+    Book createBook(String name, int price, int stockQuantity) {
         Book book = new Book();
         book.setName(name);
         book.setPrice(price);
@@ -91,7 +91,7 @@ class OrderServiceTest {
         return book;
     }
 
-    private Member createMember() {
+    Member createMember() {
         Member member = new Member();
         member.setName("회원1");
         member.setAddress(new Address("경기도 수원시", "매탄로", "123-1"));

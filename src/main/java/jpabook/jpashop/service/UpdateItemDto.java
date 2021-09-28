@@ -1,9 +1,8 @@
 package jpabook.jpashop.service;
 
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter @Setter
+@Getter
 public class UpdateItemDto {
 
     private String name;

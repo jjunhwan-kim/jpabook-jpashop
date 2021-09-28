@@ -19,8 +19,8 @@ import javax.persistence.EntityManager;
  *   * SPRING2 BOOK
  */
 
-@Component
 @RequiredArgsConstructor
+@Component
 public class InitDb {
 
     private final InitService initService;

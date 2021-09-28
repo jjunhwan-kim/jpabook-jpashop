@@ -10,8 +10,8 @@ import java.util.List;
 
 import static javax.persistence.FetchType.*;
 
-@Entity
 @Getter @Setter
+@Entity
 public class Category {
 
     @Id @GeneratedValue

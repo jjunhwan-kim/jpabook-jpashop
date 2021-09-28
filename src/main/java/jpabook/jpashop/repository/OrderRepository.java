@@ -5,7 +5,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -38,15 +37,15 @@ public class OrderRepository {
     }
 
     public List<Order> findAllByString(OrderSearch orderSearch) {
-        // orderSearch 의 orderStatus 또는 memberName 이 조건에 따라 있거나 없어야 하므로 동적쿼리 사용이 필요함
+        // orderSearch 의 orderStatus 또는 memberName이 조건에 따라 있거나 없어야 하므로 동적쿼리 사용이 필요함
         String jpql = "select o from Order o join o.member m";
-        boolean isFristCondition = true;
+        boolean isFirstCondition = true;
 
         // 주문 상테 검색
         if (orderSearch.getOrderStatus() != null) {
-            if (isFristCondition) {
+            if (isFirstCondition) {
                 jpql += " where";
-                isFristCondition = false;
+                isFirstCondition = false;
             } else {
                 jpql += " and";
             }
@@ -55,9 +54,9 @@ public class OrderRepository {
 
         // 회원 이름 검색
         if (StringUtils.hasText(orderSearch.getMemberName())) {
-            if (isFristCondition) {
+            if (isFirstCondition) {
                 jpql += " where";
-                isFristCondition = false;
+                isFirstCondition = false;
             } else {
                 jpql += " and";
             }
@@ -100,11 +99,6 @@ public class OrderRepository {
         return member.name.like(memberName);
     }
 
-    /**
-     * JPA Criteria
-     * @param orderSearch
-     * @return searchList
-     */
     public List<Order> findAllByCriteria(OrderSearch orderSearch) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Order> cq = cb.createQuery(Order.class);

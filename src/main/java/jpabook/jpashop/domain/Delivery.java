@@ -8,9 +8,10 @@ import javax.persistence.*;
 
 import static javax.persistence.FetchType.*;
 
-@Entity
 @Getter @Setter
+@Entity
 public class Delivery {
+
     @Id @GeneratedValue
     @Column(name = "delivery_id")
     private Long id;
@@ -23,5 +24,5 @@ public class Delivery {
     private Address address;
 
     @Enumerated(EnumType.STRING)
-    private DeliveryStatus status;  // READY, COMP
+    private DeliveryStatus status;
 }

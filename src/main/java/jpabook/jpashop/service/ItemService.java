@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
+@Service
 public class ItemService {
 
     private final ItemRepository itemRepository;
@@ -22,13 +22,19 @@ public class ItemService {
     }
 
     @Transactional
-    public void updateItem(Long itemId, String name, int price, int stockQuantity) {
-//    public void updateItem(Long itemId, UpdateItemDto itemDto) {
-        Item findItem = itemRepository.findOne(itemId);
-//        findItem.change(name, price, stockQuantity);
+    public void updateItem(Long itemId, String name, int price, int stockQuantity, String author, String isbn) {
+        Book findItem = (Book) itemRepository.findOne(itemId);
         findItem.setName(name);
         findItem.setPrice(price);
         findItem.setStockQuantity(stockQuantity);
+        findItem.setAuthor(author);
+        findItem.setIsbn(isbn);
+    }
+
+    @Transactional
+    public void updateItem(Long itemId, UpdateItemDto itemDto) {
+        Item findItem = itemRepository.findOne(itemId);
+        findItem.change(itemDto.getName(), itemDto.getPrice(), itemDto.getStockQuantity());
     }
 
     public List<Item> findItems() {

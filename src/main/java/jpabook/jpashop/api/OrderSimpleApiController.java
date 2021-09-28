@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
  * Order -> Member
  * Order -> Delivery
  */
-@RestController
 @RequiredArgsConstructor
+@RestController
 public class OrderSimpleApiController {
 
     private final OrderRepository orderRepository;

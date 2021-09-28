@@ -13,14 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
-@Controller
 @RequiredArgsConstructor
+@Controller
 public class ItemController {
 
     private final ItemService itemService;
 
     @GetMapping("/items/new")
     public String createForm(Model model) {
+
         model.addAttribute("form", new BookForm());
         return "items/createItemForm";
     }
@@ -42,13 +43,15 @@ public class ItemController {
 
     @GetMapping("/items")
     public String list(Model model) {
+
         List<Item> items = itemService.findItems();
         model.addAttribute("items", items);
         return "items/itemList";
     }
 
-    @GetMapping("/items/{itemId}/edit") // path variable
+    @GetMapping("/items/{itemId}/edit")
     public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
+
         Book item = (Book) itemService.findOne(itemId);
 
         BookForm form = new BookForm();
@@ -63,9 +66,10 @@ public class ItemController {
         return "items/updateItemForm";
     }
 
-    @PostMapping("/items/{itemId}/edit") // path variable
+    @PostMapping("/items/{itemId}/edit")
     public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") BookForm form) {
 
+//        준영속 엔티티 병합
 //        Book book = new Book();
 //        book.setId(form.getId());
 //        book.setName(form.getName());
@@ -75,7 +79,8 @@ public class ItemController {
 //        book.setIsbn(form.getIsbn());
 //        itemService.saveItem(book);
 
-        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
+        // 변경 감지
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity(), form.getAuthor(), form.getIsbn());
 
         return "redirect:/items";
     }
